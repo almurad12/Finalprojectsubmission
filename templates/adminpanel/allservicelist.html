@@ -1,0 +1,211 @@
+
+{% extends "adminpanel/baseAdminDashboard.html" %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Add Service
+  </button>
+  <input id="myInput" type="text" placeholder="Search..">
+  <br><br>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Service</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" enctype="multipart/form-data">
+ 
+            {% csrf_token %}
+          {{ form|crispy }}
+             
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form>
+            <!-- <form action="">
+              <div class="form-group">
+                <label for="sel1">User</label>
+                <select class="form-control" id="sel1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="form-group">
+               <label for="Title"> Service Title</label>
+               <input type="text" class="form-control" placeholder="Enter your service Title">
+              </div>
+              <div class="form-group">
+                <label for="Details"> Service Details</label>
+                <input type="text" class="form-control" placeholder="Enter your service Details">
+               </div>
+               <div class="form-group">
+                <label for="sel1">Service Category</label>
+                <select class="form-control" id="sel1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="Details"> Service Price</label>
+                <input type="number" class="form-control" placeholder="Enter your service Details">
+               </div>
+              <div class="form-group">
+                <label >Service Location</label>
+                <select class="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+            </form> -->
+          </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Submit</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <!--  Edit Modal -->
+  <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Service</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="">
+              <div class="form-group">
+                <label for="sel1">User</label>
+                <select class="form-control" id="sel1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="form-group">
+               <label for="Title"> Service Title</label>
+               <input type="text" class="form-control" placeholder="Enter your service Title">
+              </div>
+              <div class="form-group">
+                <label for="Details"> Service Details</label>
+                <input type="text" class="form-control" placeholder="Enter your service Details">
+               </div>
+               <div class="form-group">
+                <label for="sel1">Service Category</label>
+                <select class="form-control" id="sel1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="Details"> Service Price</label>
+                <input type="number" class="form-control" placeholder="Enter your service Details">
+               </div>
+              <div class="form-group">
+                <label >Service Location</label>
+                <select class="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+            </form>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          <div class="container">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <!-- <th scope="col">User id </th> -->
+                  <th scope="col">Service title</th>
+                  <th scope="col">Service details</th>
+                  <th scope="col">price</th>
+                  <th scope="col">location</th>
+                  <th scope="col">Service Created id</th>
+                  <th scope="col">Feature product</th>
+                  <!-- <th scope="col">Service id</th> -->
+                  <th scope="col">Category</th>
+                  <th scope="col">Action</th>
+                  
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                {% for data in  allservicelist %}
+                <tr>
+                  <!-- <td>{{data.id}}</td> -->
+                  <td>{{data.servicetitle}}</td>
+                  <td>{{data.servicedetails}}</td>
+                  <td>{{data.serviceprice}}</td>
+                  <td>{{data.servicelocation}}</td>
+                  <td>{{data.user_id}}</td>
+                  <td>
+                    {% if data.featureservice == 0 %}
+                    <a href="allservicelist/featuretrue?id={{data.id}}" class="btn btn-danger active">no</a>
+                    
+                  </td>
+                    {% else %}
+                    <a href="allservicelist/featurefalse?id={{data.id}}" class="btn btn-success active">yes</a>
+                    {% endif %}
+                  <!-- <td>{{data.id}}</td> -->
+                  <td>{{data.servicecategory}}</td>
+                  <!-- <td><Button class="btn btn-danger btn-sm">Delete user</Button></td> -->
+                  <!-- <td><ahref class="btn btn-danger btn-sm">Delete user</a></td> -->
+                    <td><a href="allservicelist/delete?id={{data.id}}" class="btn btn-danger">Delete Service</a></td>
+                    <!-- <td><a href="/admin/account/user/{{data.id}}/delete" class="btn btn-danger">Delete User</a></td> -->
+                    <!-- admin/account/user/{{data.id}}/delete -->
+
+
+                </tr>
+                {% endfor %}
+                <!-- <tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Jack</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal1">Edit</button>
+                      <button class="btn btn-danger">Delete</button>
+                    </td>
+                  </tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>
+                    <button class="btn btn-warning">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                  </td>
+                </tr> -->
+               
+              </tbody>
+            </table>
+            {% endblock %}

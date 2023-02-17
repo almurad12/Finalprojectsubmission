@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Gallery Filter using Jquery </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script>
+
+<script>
+    //jquery coding
+
+$(document).ready(function(){
+
+$('#search').click(function(){
+
+  var checker = 0;
+  for (var i = 0; i < 12; i++) {
+    var card = $("div").filter(".col-md-3")[i];
+    var title = $("h5").filter(".card-title")[i].innerText.toUpperCase();
+
+    if (title.indexOf($("#inp").val().toUpperCase()) > -1) {
+      card.style.display = 'block';
+      checker++;
+    }
+    else{
+      card.style.display = 'none';
+    }
+  }
+
+if (checker > 0) {
+$("#not_find_any_thing").text("");
+
+}
+else {
+$("#not_find_any_thing").text("No Result Found").fadeIn();
+}
+
+
+
+
+
+
+});
+});
+</script>
+<style>
+
+.cards:hover{
+  box-shadow: 20px 20px 100px -50px #000;
+  transition: 0.3s;
+}
+
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container p-5 mt-2">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+
+      <div class="input-group">
+        <input type="text" placeholder="Search....." class="form-control" id="inp">
+        <div class="input-group-append">
+          <button type="button" class="btn btn-dark" id="search">Search</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row p-5" id="panel">
+    <h1 class="display-3 text-center text-muted" id="not_find_any_thing"></h1>
+
+    {% for data in servicedataset %}
+  <div class="col-md-3 mt-5">
+    <div class="cards p-2">
+      <img class="card-img-top" src="Images/img1.png" alt="">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+
+          <h5 class="card-title"><a href="/service/singleservice/{{data.id}}" class="text-danger">{{ data.servicetitle }} </a></h5>
+          <span class="text-success">{{data.serviceprice}} tk</span>
+        </div>
+        <p class="card-text" style="font-size:14px;">{{data.servicedetails}}</p>
+        <h6>{{data.servicecategory}}</h6>
+        <h7>{{data.servicelocation}}</h7>
+        <br>
+        <span class="badge  badge-dark">{{data.user}}</span>
+        <br>
+      </div>
+      <a href="/cart/addtocart?userid={{user.id}}&serviceid={{data.id}}" class="btn btn-success"> Add To Cart</a>
+
+    </div>
+
+  </div>
+  {% endfor %}
+
+
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

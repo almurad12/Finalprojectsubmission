@@ -1,0 +1,202 @@
+
+{% extends "adminpanel/baseAdminDashboard.html" %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Add User
+  </button>
+  <input id="myInput" type="text" placeholder="Search..">
+  <br><br>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Service</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <!-- <form action="">
+              <div class="form-group">
+                <label for="sel1">User</label>
+                <select class="form-control" id="sel1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="form-group">
+               <label for="Title"> Service Title</label>
+               <input type="text" class="form-control" placeholder="Enter your service Title">
+              </div>
+              <div class="form-group">
+                <label for="Details"> Service Details</label>
+                <input type="text" class="form-control" placeholder="Enter your service Details">
+               </div>
+               <div class="form-group">
+                <label for="sel1">Service Category</label>
+                <select class="form-control" id="sel1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="Details"> Service Price</label>
+                <input type="number" class="form-control" placeholder="Enter your service Details">
+               </div>
+              <div class="form-group">
+                <label >Service Location</label>
+                <select class="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+            </form> -->
+            <form method="POST" enctype="multipart/form-data">
+ 
+              {% csrf_token %}
+            {{ form|crispy }}
+               
+              <input type="submit" value="Submit" class="btn btn-primary btn-block">
+          </form>
+          </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Submit</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <!--  Edit Modal -->
+  <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Service</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="">
+              <div class="form-group">
+                <label for="sel1">User</label>
+                <select class="form-control" id="sel1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="form-group">
+               <label for="Title"> Service Title</label>
+               <input type="text" class="form-control" placeholder="Enter your service Title">
+              </div>
+              <div class="form-group">
+                <label for="Details"> Service Details</label>
+                <input type="text" class="form-control" placeholder="Enter your service Details">
+               </div>
+               <div class="form-group">
+                <label for="sel1">Service Category</label>
+                <select class="form-control" id="sel1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="Details"> Service Price</label>
+                <input type="number" class="form-control" placeholder="Enter your service Details">
+               </div>
+              <div class="form-group">
+                <label >Service Location</label>
+                <select class="form-control">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+              </div>
+            </form>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+          <div class="container">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <!-- <th scope="col">User id </th> -->
+                  <th scope="col">User Name</th>
+                  <th scope="col">User Email</th>
+                  <th scope="col">last login</th>
+                  <th scope="col">Admin</th>
+                  <!-- <th scope="col">Admin</th> -->
+                  <th scope="col">Buyer</th>
+                  <th scope="col">Seller</th>
+                  <th scope="col">Action</th>
+                  
+                </tr>
+              </thead>
+              <tbody id="myTable">
+                {% for data in  alluserlist %}
+                <tr>
+                  <!-- <td>{{data.id}}</td> -->
+                  <td>{{data.username}}</td>
+                  <td>{{data.email}}</td>
+                  <td>{{data.last_login}}</td>
+                  <td>{{data.is_superuser}}</td>
+                  <!-- <td>{{data.is_admin}}</td> -->
+                  <td>{{data.is_buyer}}</td>
+                  <td>{{data.is_seller}}</td>
+                  <!-- <td><Button class="btn btn-danger btn-sm">Delete user</Button></td> -->
+                  <!-- <td><ahref class="btn btn-danger btn-sm">Delete user</a></td> -->
+                    <td><a href="userlist/delete?user={{data.id}}" class="btn btn-danger">Delete User</a></td>
+                    <!-- <td><a href="/admin/account/user/{{data.id}}/delete" class="btn btn-danger">Delete User</a></td> -->
+                    <!-- admin/account/user/{{data.id}}/delete -->
+
+
+                </tr>
+                {% endfor %}
+                <!-- <tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Jack</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>
+                      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal1">Edit</button>
+                      <button class="btn btn-danger">Delete</button>
+                    </td>
+                  </tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>
+                    <button class="btn btn-warning">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                  </td>
+                </tr> -->
+               
+              </tbody>
+            </table>
+            {% endblock %}

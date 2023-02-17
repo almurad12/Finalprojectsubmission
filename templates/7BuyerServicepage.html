@@ -1,0 +1,323 @@
+{% if user.is_authenticated and user.is_buyer %}
+
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>login</title>  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
+    {% load static %}  
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">  
+    <script src=" {% static 'js/bootstrap.min.js' %}"> </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- <link rel="stylesheet" href="{% static 'css/4sellerdashboard.css' %}">   -->
+</head>  
+<body>
+  <!-- Adding SearchFilter -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <div class="row bg-light">
+    <div class="col-md-2">
+        <nav class="navbar navbar-light ">
+            <a class="navbar-brand" href="#">Service Website</a>
+          </nav>
+    </div>
+    <div class="col-md-4 mt-3">
+          <form class="form-inline">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Category
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <a href="/account/buyerdashboard/" class="dropdown-item">All Service</a>
+              <a href="/account/buyerdashboard/?category=service1" class="dropdown-item">service1</a>
+              <a href="/account/buyerdashboard/?category=service2" class="dropdown-item">service2</a>
+              <a href="/account/buyerdashboard/?category=service3" class="dropdown-item">service3</a>
+              <a href="/account/buyerdashboard/?category=service4" class="dropdown-item">service4</a>
+            </div>
+            <input class="form-control mr-sm-2 filter" onkeyup="searchService()" type="Search.." placeholder="Search" aria-label="Search" id="filter">
+            <!-- <button class="btn btn-success my-2 my-sm-0" id="inp" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg></button> -->
+          </form>
+
+          
+    </div>
+    <div class="col-md-4 pt-3">
+      <div class="btn-group">
+        <!-- <a href="#" class="btn btn-primary btn-lg active btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="bi bi-bag-plus-fill"></i>{{cartcount}}</a> -->
+        <!-- <button type="button" class="btn btn-success dropdown-toggle btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="bi bi-bag-plus-fill"></i>
+          {{cartcount}}
+        </button> -->
+        <button type="button" class="btn btn-outline-success dropdown-toggle mb-2" data-toggle="modal" data-target="#exampleModal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0z"/>
+          </svg><span class="badge  badge-dark badge-rounded-pill" style="border-radius: 1.25rem; top: -7px; right: 14px;">{{cartcount}}</span>
+        </button>
+        <!-- <i class="bi bi-cart" style="width: 200px; height:20px"></i>{{cartcount}} -->
+        <!-- Modal -->
+<!-- <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">My Cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Price</th>
+              <th scope="col">Date</th>
+              <th scope="col"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              </svg></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% for data in addtocart %}
+              
+              
+              <td> <input type="text"placeholder="{{data.servicetitle}}"></td>
+              <td>{{data.serviceprice}} tk</td>
+              <td><input type="date" placeholder="Date"></td>
+              <td> <a href="/cart/cartitemdelete/{{data.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              </svg></a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="address">
+          <input type="text" placeholder="Enter your address" class="form-control">
+        </div>
+      </div>
+      <div class="model-footer d-flex justify-content-end pb-4 pr-4">
+        <button class="btn btn-warning btn-md">Order Now</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+ <!-- Modal -->
+
+ <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">My Cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Service Details</th>
+              <th scope="col">Date</th>
+              <th scope="col">Number & Address</th>
+              <th scope="col">Action</th>
+              <!-- <th scope="col"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              </svg></th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% for data in addtocart %}
+              <form action="http://127.0.0.1:8000/cart/order" method="post">
+                {% csrf_token %}
+              <!-- <td> <input type="hidden"placeholder="{{data.servicetitle}}"></td> -->
+              
+              <td><input type="hidden" name="cartid" value="{{data.id}}">
+                <input type="hidden" name="serviceuserid" value="{{data.serviceuseridnum}}">
+                <!-- <p>{{data.serviceuseridnum}}</p> -->
+                <input type="hidden" name="servicetitle"value="{{data.servicetitle}}"> 
+                <input type="hidden" name="serviceid" value="{{data.service_id}}" id="serviceid"> 
+                <input type="hidden" value="{{data.user_id}}" name="userid">
+                <input type="hidden" value="{{data.servicetitle}}" id="servicetitle">
+                <input type="hidden" value="{{data.serviceprice}}" name="serviceprice"> Title : {{data.servicetitle}} <br> 
+                <span class="badge bg-primary"> Price : {{data.serviceprice}} tk</span>
+                <br>
+              </td>
+              <td><input type="date" name="date" id="date" class="form-control" placeholder="Date"></td>
+              <td>
+                <input type="text" name="phoneno" id ="phoneno"class="form-control" placeholder="Enter your number">
+                <span>
+                  <input type="text" name="address" id ="address"class="form-control mt-2" placeholder="Address">
+              </span>
+              </td>
+              <td>
+               
+                <button onclick="myFunction()"class="btn btn-warning btn-sm" id="ordernow">Order Now</button> 
+                <a href="/cart/cartitemdelete/{{data.id}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              </svg></a></td>
+            </form>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <!-- <div class="address">
+          <input type="text" placeholder="Enter your address" class="form-control">
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+         <!-- <div class="dropdown-menu">
+          <table class="table">
+            <h5 class="pl-2">My Cart</h5>
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                </svg></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>We provide seo service</td>
+                <td>300 tk</td>
+                <td> <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                </svg></a></td>
+              </tr>
+              <tr>
+                <td>painter service</td>
+                <td>300</td>
+                <td> <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                </svg></a></td>
+              </tr>
+              <tr>
+                <td>painter</td>
+                <td>300</td>
+                <td> <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                </svg></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+      </div>
+        <!-- <h5>Cart{{cartcount}}</h5> -->
+    </div>
+    <div class="col-md-1">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <!-- <a class="dropdown-item" href="./8buyerprofilepage.html">Your profile</a> -->
+                    <a class="dropdown-item" href="/account/buyerorder/">Your order</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">logout</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </nav>
+    </div>
+
+</div>
+<div class="container">
+  <!-- {% for cart in cartvalue %}
+  <h6>{{cart.servicetitle}}</h6>
+  {% endfor %} -->
+  <div class="row  pt-3" id="service-list">
+    {% for data in servicedataset %}
+            <div class="card col-sm-5 mt-3 ml-3">
+                    <div class="card-body" >
+                    <h4 class="card-title"> <a href="/service/singleservice/{{data.id}}" class="text-danger">{{ data.servicetitle }} </a></h4>
+                      <p class="card-text">{{data.servicedetails}}</p>
+                      <h6><a href="/account/buyerdashboard/?category={{data.servicecategory}}" class="text-dark">{{data.servicecategory}}</a></h6>
+                      <h7>{{data.servicelocation}}</h7>
+                      <h5 class="text-center pt-3">{{data.serviceprice}}tk</h5>
+                        <span class="badge  badge-dark">{{data.user}}</span>
+                        <!-- <h5 class="text-center pt-3">{{data.user.id}}</h5> -->
+                    </div>
+                 <!-- <a href="/cart/addtocart?userid={{user.id}}&serviceid={{data.id}}"class="btn btn-success"> Add To Cart</a> -->
+                 <!-- <a href="/cart/addtocart?userid={{user.id}}&serviceid={{data.id}}&servicetitle={{data.servicetitle}}&serviceprice={{data.serviceprice}}"class="btn btn-success"> Add To Cart</a> -->
+                 <a href="/cart/addtocart?userid={{user.id}}&serviceid={{data.id}}&servicetitle={{data.servicetitle}}&serviceprice={{data.serviceprice}}&serviceuseridnum={{data.user.id}}"class="btn btn-success"> Add To Cart</a>
+                </div>
+    {% endfor %}
+</div>
+<script>  
+  // function Order(){
+  //   console.log("button clicked")
+  // }
+function searchService(){
+  const input = document.getElementById("filter").value.toUpperCase();
+  console.log(input)
+  const servicelistContainer = document.getElementById("service-list")
+  const card = servicelistContainer.getElementsByClassName("card")
+  console.log(card)
+  for (i=0; i<card.length;i++){
+    let title = card[i].querySelector(".card-body h4.card-title")
+    console.log(title)
+    if(title.innerText.toUpperCase().indexOf(input)>-1){
+      card[i].style.display="";
+    }
+    else{
+      card[i].style.display="none";
+    }
+  }
+}
+</script>
+
+
+
+
+
+{% else %}
+<script>
+alert("please login first")
+window.location.href = "http://127.0.0.1:8000/account/login/";
+</script>
+ <!-- <h1>plzz login first <a href="">login</a></h1> -->
+{% endif %}
+</div>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+<script>
+   $("#ordernow").click(function(){
+    var dataid = $("#dataid").val();
+    $.post("http://127.0.0.1:8000/account/buyerdashboard/",{
+    dataid :dataid,
+    },function(response){
+      // console.log("data send"+dataid)
+      console.log(response.message)
+    })
+  })
+//   function myFunction() {
+//   $.ajax({
+//     method:"post",
+//     url:"http://127.0.0.1:8000/account/buyerdashboard/",
+//     data:"hello everyone"
+//   }).done(function(){
+//     console.log(response)
+//   }).fail(function(response){
+//     console.log(response)
+//   })
+// }
+</script>
+</body>  
+</html>  

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>employee page</title>
+</head>
+<body>
+    {% if user.is_authenticated and user.is_employee %}
+    <h1> hello {{ user.username }} your role is employee</h1>
+    {% else %}
+    <h1>you cannot access this page</h1>
+    {% endif %}
+</body>
+</html>

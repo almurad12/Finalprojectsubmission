@@ -1,0 +1,125 @@
+.s01 {
+    min-height: 100vh;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-family: poppins, sans-serif;
+    /* background: url('/static/images/bg1.jpg'); */
+    background: url('/static/images/service.png');
+    background-size: cover;
+    background-position: center center;
+    padding: 15px
+}
+input, button {
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.s01 form .inner-form .input-field input {
+    height: 100%;
+    background: #fff;
+    border: 0;
+    display: block;
+    width: 100%;
+    padding: 10px 32px;
+    font-size: 16px;
+    color: #333;
+    border: 1px solid #e5e5e5;
+}
+
+/* 2registrationpage css */
+
+
+body{
+    background-color:#8f37aa;
+}
+
+.height-100{
+    height:100vh;
+}
+
+.card{
+    width:100%;
+    border:none;
+}
+
+.form label{
+    font-size:13px;
+    margin-left:2px;
+}
+
+.form-control{
+    height:45px;
+    border:2px solid #8f37aa;
+}
+
+.form-control:focus{
+    box-shadow:none;
+    border:2px solid #8f37aa;
+}
+
+
+.phone {
+    position:relative;
+}
+
+.phone input{
+    padding-left:29px;
+}
+.phone i{
+    position:absolute;
+    top:17px;
+    left:10px;
+    color:#8f37aa; 
+}
+
+.button{
+    height:50px;
+    background-color:#8f37aa;
+}
+
+.button:hover{
+    background-color:#8f37aa;
+}
+
+
+/*Radio Button*/
+
+label.radio {
+    cursor: pointer;
+    width:100%;
+}
+
+label.radio input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:100%;
+    visibility: hidden;
+    pointer-events: none
+}
+
+label.radio span {
+    padding: 12px 14px;
+    width:100%;
+    text-align:center;
+    border: 2px solid #8f37aa;
+    display: inline-block;
+    color: #8f37aa;
+    border-radius: 3px;
+    text-transform: uppercase;
+
+}
+
+label.radio input:checked+span {
+    border-color: #8f37aa;
+    background-color: #8f37aa;
+    color: #fff
+}
+
+
+
+

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    {% if user.is_authenticated and user.is_buyer %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Service website</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="col-md-11">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="{% url 'buyerdashboard' %}">Home</a> -->
+                        <a class="nav-link" href="/account/buyerdashboard/">Home</a>
+                       
+                      </li>
+                  </ul>
+            </div>
+            <div class="col-md-1">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'logout' %}">logout</a>
+                    </li>
+                  </ul>
+            </div>
+          
+        </div>
+      </nav>
+    <div class="container">
+        
+      <!-- fields=['user','servicetitle',
+            'servicedetails','servicecategory',
+            'serviceprice','servicelocation'
+            ] -->
+        <!-- <h3>My service</h3>
+        {% for x in service %}
+         <h6>{{x.user}}</h6>
+         <h6>{{x.servicetitle}}</h6>
+         <h6>{{x.servicedetails}}</h6>
+         <h6>{{x.servicecategory}}</h6>
+         <h6>{{x.serviceprice}}</h6>
+         <h6>{{x.servicelocation}}</h6>
+        {% endfor %}
+    
+        </div> -->
+        <h4 class="pt-3">Your Created Order</h4>
+        <!-- {% for data in createdorder %}
+        <p>{{data.orderservicetitle}}</p>
+        {% endfor %}
+        <h5>{{ createdorder }}</h5> -->
+          <div class="row pt-3">
+            {% for data in createdorder %}
+             {% if data.buyer_review_complete == 1 %}
+             <!-- <p class="badge badge-danger">no order create</p> -->
+             {% else %}
+              <div class="col-sm-6 pt-3">
+                    <div class="card">
+                      <div class="row">
+                        <div class="col-8">
+                          
+                       </div>
+                       <div class="col-4">
+                        
+                     </div>
+                       </div>
+                          <div class="card-body">
+                            <h5 class="card-title">{{data.orderservicetitle}}</h5>
+                            <p class="card-text">{{data.orderserviceprice}} tk</p>
+                            <p class="card-text"><b>Address : </b>{{data.orderaddress}}</p>
+                            <p class="card-text"><b>Date : </b>{{data.orderdate}}</p>
+                            <p class="card-text"><b>Mobile No :</b> {{data.orderphoneno}}</p>
+                            <!-- <p>{{data.serviceuserid}}</p>
+                            <p>{{userid}}</p> -->
+                            <!-- <p class="card-text">{{data.id}}</p> -->
+                            
+                            <!-- <h6>{{post.servicecategory}}</h6>
+                            <h7>{{post.servicelocation}}</h7> -->
+                            <!-- <h5 class="text-center pt-3">service price</h5> -->
+                            <!-- <button class="btn btn-danger btn-block"> Cancel order</button> -->
+                           
+                            {% if data.order_complete == 1 %}
+                            <!-- <a href="/account/finalordercompleted/?id={{data.id}}" class="btn btn-success btn-block"> Delivery order accept</a>
+                            <a href="/account/buyerorder/cancel/{{data.id}}" class="btn btn-danger btn-block"> Cancel Order</a> -->
+                             {% if data.order_final_complete == 1%}
+                             <!-- <p> seller id:{{data.serviceuserid}}</p>
+                             <p> buyer id:{{user.id}}</p> -->
+                             <a href="/account/buyerreview/?reviewgivenid={{user.id}}&reviewreciveid={{data.serviceuserid}}&id={{data.id}}" class="btn btn-success btn-block"> Order Completed share your review</a>
+                             <a href="/account/buyerorder/cancel/{{data.id}}" class="btn btn-danger btn-block"> Cancel Order</a>
+                             {% else %}
+                             <a href="/account/finalordercompleted/?id={{data.id}}" class="btn btn-success btn-block"> Delivery order accept</a>
+                            <a href="/account/buyerorder/cancel/{{data.id}}" class="btn btn-danger btn-block"> Cancel Order</a>
+                             {% endif %}
+                            {% else %}
+                            <a href="/account/buyerorder/cancel/{{data.id}}" class="btn btn-danger btn-block"> Cancel Order</a>
+                            {% endif %}
+
+                            <!-- {% if data.order_final_complete == 0 %}
+                            <a href="/account/finalordercompleted/?id={{data.id}}" class="btn btn-success btn-block"> Delivery order accept</a>
+                            <a href="/account/buyerorder/cancel/{{data.id}}" class="btn btn-danger btn-block"> Cancel Order</a>
+                            {% else %}
+                            <a href="/account/buyerorderrecieve/?id={{data.id}}" class="btn btn-success btn-block"> Order done share your review</a>
+                            <a href="/account/buyerorder/cancel/{{data.id}}" class="btn btn-danger btn-block"> Cancel Order</a>
+                            {% endif %} -->
+                           
+
+                            <!-- <a href="/account/buyerorderrecieve/?id={{data.id}}" class="btn btn-success btn-block"> Delivery order accept</a>
+                            <a href="/account/buyerorder/cancel/{{data.id}}" class="btn btn-danger btn-block"> Cancel Order</a> -->
+                            
+                          </div>
+                         <!-- <button class="btn btn-danger"> Order Now</button> -->
+                    </div>
+              </div>
+             {% endif %}
+            {% endfor %}
+        </div>
+
+
+        {% else %}
+        <script> 
+        window.location.href = "http://127.0.0.1:8000/account/login/";
+        </script>
+         <!-- <h1>plzz login first <a href="{% url 'login_view' %}">login</a></h1> -->
+        {% endif %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
